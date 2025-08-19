@@ -1,0 +1,34 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Build push_swap (Makefile)",
+            "command": "make",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Compila el proyecto usando el Makefile"
+        },
+        {
+            "type": "shell",
+            "label": "Clean push_swap (Makefile)",
+            "command": "make",
+            "args": ["fclean"],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "group": "build",
+            "detail": "Limpia los archivos generados por el Makefile"
+        }
+    ]
+}
