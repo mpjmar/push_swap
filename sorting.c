@@ -6,7 +6,7 @@
 /*   By: maria-j2 <maria-j2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 14:58:01 by maria-j2          #+#    #+#             */
-/*   Updated: 2025/08/19 16:28:20 by maria-j2         ###   ########.fr       */
+/*   Updated: 2025/08/21 19:57:13 by maria-j2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,27 +37,27 @@ void	sort_3(t_node **stack_a)
 		swap_a(stack_a);
 }
 
-static void	execute_move(t_node **stack_a, t_node **stack_b, int index)
+void	sort_5(t_node **stack_a, t_node **stack_b)
 {
-	int		cost_a;
-	int		cost_b;
-	t_node	*temp;
+	int	pushed;
 
-	temp = *stack_b;
-	while (temp)
+	pushed = 0;
+	create_index(*stack_a);
+	while (pushed < 2)
 	{
-		if (temp->index == index)
+		if ((*stack_a)->index == 1 || (*stack_a)->index == 2)
 		{
-			cost_a = (*stack_b)->cost_a;
-			cost_b = (*stack_b)->cost_b;
-			temp = NULL;
+			push_b(stack_a, stack_b);
+			pushed++;
 		}
 		else
-			temp = temp->next;
+			rotate_a(stack_a);
 	}
-	rotate_pos(stack_a, stack_b, cost_a, cost_b);
-	rotate_neg(stack_a, stack_b, cost_a, cost_b);
-	push_a(stack_b, stack_a);
+	sort_3(stack_a);
+	if ((*stack_b)->value < (*stack_b)->next->value)
+		swap_b(stack_b);
+	push_a(stack_a, stack_b);
+	push_a(stack_a, stack_b);
 }
 
 static void	sort(t_node **stack_a)
@@ -65,17 +65,22 @@ static void	sort(t_node **stack_a)
 	t_node	*head;
 	int		pos;
 	int		mov;
+	int		size;
 
 	pos = 0;
 	mov = 0;
 	head = *stack_a;
-	while (head->index != 1)
+	size = count_nodes(*stack_a);
+	while (head && head->index != 1)
 	{
 		pos++;
 		head = head->next;
 	}
-	mov = calc_cost(count_nodes(*stack_a), pos);
-	rotate_a_alone(stack_a, mov);
+	if (pos > 0)
+	{
+		mov = calc_cost(size, pos);
+		rotate_a_alone(stack_a, mov);
+	}
 }
 
 void	sort_all(t_node **stack_a, t_node **stack_b)
@@ -88,17 +93,9 @@ void	sort_all(t_node **stack_a, t_node **stack_b)
 	while (*stack_b)
 	{
 		init_nodes(*stack_a, *stack_b);
-		//print_stack(*stack_a, 'A');
-		//print_stack(*stack_b, 'B');
 		index = set_cheapest(*stack_b);
 		execute_move(stack_a, stack_b, index);
 	}
-	//printf("FUERA DEL WHILE\n");
-	//print_stack(*stack_a, 'A');
-	//print_stack(*stack_b, 'B');
 	if (!is_sorted(*stack_a))
 		sort(stack_a);
-	//printf("DESPUES DE IS SORTED\n");
-	//print_stack(*stack_a, 'A');
-	//print_stack(*stack_b, 'B');
 }

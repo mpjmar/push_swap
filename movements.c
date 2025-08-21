@@ -6,7 +6,7 @@
 /*   By: maria-j2 <maria-j2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 17:09:53 by maria-j2          #+#    #+#             */
-/*   Updated: 2025/08/17 19:05:14 by maria-j2         ###   ########.fr       */
+/*   Updated: 2025/08/21 18:20:39 by maria-j2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,27 @@ void	rotate_a_alone(t_node **stack_a, int cost_a)
 	}
 }
 
-/* void	rotate_b_alone(t_node **stack_b, int cost_b)
+void	execute_move(t_node **stack_a, t_node **stack_b, int index)
 {
-	while (cost_b > 0)
+	int		cost_a;
+	int		cost_b;
+	t_node	*temp;
+
+	cost_a = 0;
+	cost_b = 0;
+	temp = *stack_b;
+	while (temp)
 	{
-		rotate_b(stack_b);
-		cost_b--;
+		if (temp->index == index)
+		{
+			cost_a = temp->cost_a;
+			cost_b = temp->cost_b;
+			temp = NULL;
+		}
+		else
+			temp = temp->next;
 	}
-	while (cost_b < 0)
-	{
-		rev_rotate_b(stack_b);
-		cost_b++;
-	}
-} */
+	rotate_pos(stack_a, stack_b, cost_a, cost_b);
+	rotate_neg(stack_a, stack_b, cost_a, cost_b);
+	push_a(stack_b, stack_a);
+}

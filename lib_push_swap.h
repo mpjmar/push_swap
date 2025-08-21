@@ -6,7 +6,7 @@
 /*   By: maria-j2 <maria-j2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 14:56:36 by maria-j2          #+#    #+#             */
-/*   Updated: 2025/08/19 17:07:54 by maria-j2         ###   ########.fr       */
+/*   Updated: 2025/08/21 19:00:04 by maria-j2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <limits.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdio.h> //BORRAR
 
 typedef struct s_node
 {
@@ -26,7 +25,6 @@ typedef struct s_node
 	int				target_pos;
 	int				cost_a;
 	int				cost_b;
-	int				cheapest_node;
 	struct s_node	*next;
 }	t_node;
 
@@ -53,17 +51,19 @@ void	update_curr_pos(t_node *stack);
 // main
 int		main(int argc, char **argv);
 void	push_swap(t_node **stack_a, t_node **stack_b);
-// t_node	*manage_two_args(char **argv, t_node *stack_a);
-// t_node	*manage_more_args(char **argv, t_node *stack_a);
+int		manage_two_args(char **argv, t_node *stack_a);
+int		take_actions(t_node *stack_a, t_node *stack_b);
 
 // movements
 void	rotate_pos(t_node **stack_a, t_node **stack_b, int cost_a, int cost_b);
 void	rotate_neg(t_node **stack_a, t_node **stack_b, int cost_a, int cost_b);
 void	rotate_a_alone(t_node **stack_a, int cost_a);
+void	execute_move(t_node **stack_a, t_node **stack_b, int index);
 
 // push
 void	push_a(t_node **stack_b, t_node **stack_a);
 void	push_b(t_node **stack_a, t_node **stack_b);
+void	rotate_a_alone(t_node **stack_b, int cost_b);
 
 // rev rotate
 void	rev_rotate_a(t_node **stack_a);
@@ -78,6 +78,7 @@ void	rr_rotate(t_node **stack_a, t_node **stack_b);
 // sorting
 void	init_nodes(t_node *stack_a, t_node *stack_b);
 void	sort_3(t_node **stack_a);
+void	sort_5(t_node **stack_a, t_node **stack_b);
 void	sort_all(t_node **stack_a, t_node **stack_b);
 
 // stack_a creation
@@ -101,7 +102,6 @@ long	ft_atol(const char *str);
 void	free_stack(t_node **stack);
 void	free_split(char **arr);
 int		neg_to_abs(int a);
-void	print_stack(t_node *stack, char name); //BORRAR!!!
 
 // verification checks
 int		not_duplicated(t_node *stack, int number);

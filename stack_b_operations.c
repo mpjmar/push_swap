@@ -6,7 +6,7 @@
 /*   By: maria-j2 <maria-j2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 19:41:27 by maria-j2          #+#    #+#             */
-/*   Updated: 2025/08/19 18:13:35 by maria-j2         ###   ########.fr       */
+/*   Updated: 2025/08/21 18:13:24 by maria-j2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	count_nodes(t_node *stack)
 	return (size);
 }
 
-void	create_stack_b(t_node **stack_a, t_node **stack_b)
+static void	move_nodes(t_node **stack_a, t_node **stack_b)
 {
 	int	max;
 	int	size;
@@ -38,56 +38,77 @@ void	create_stack_b(t_node **stack_a, t_node **stack_b)
 		nodes = count_nodes(*stack_a);
 		if ((max % 2 == 0) && (*stack_a)->index <= max / 2 && nodes > 3)
 			push_b(stack_a, stack_b);
-		else if ((max % 2 != 0) && (*stack_a)->index <= (max / 2) + 1 && nodes > 3)
+		else if ((max % 2 != 0)
+			&& (*stack_a)->index <= (max / 2) + 1 && nodes > 3)
 			push_b(stack_a, stack_b);
 		else
 			rotate_a(stack_a);
 		size--;
 	}
+}
+
+void	create_stack_b(t_node **stack_a, t_node **stack_b)
+{
+	int	max;
+	int	size;
+
+	move_nodes(stack_a, stack_b);
+	max = count_nodes(*stack_a);
 	size = count_nodes(*stack_a);
 	while (size > 3)
 	{
-		push_b(stack_a, stack_b);
-		size--;
+		if ((*stack_a)->index != max)
+		{
+			push_b(stack_a, stack_b);
+			size--;
+		}
+		else
+			rotate_a(stack_a);
+	}
+}
+
+static void	set_target_p(t_node *stack_a, t_node *stack_b,
+	t_node *cursor_a, int target_p)
+{
+	int		target_index;
+
+	cursor_a = stack_a;
+	target_index = INT_MAX;
+	while (cursor_a)
+	{
+		if (cursor_a->index < stack_b->index)
+		{
+			target_index = cursor_a->index;
+			target_p = cursor_a->curr_pos;
+		}
+		cursor_a = cursor_a->next;
 	}
 }
 
 void	set_target_pos(t_node *stack_a, t_node *stack_b)
 {
-	int		diff;
-	int		target;
-	int		idx_b;
-	t_node	*init_a;
+	int		target_index;
+	int		target_p;
+	t_node	*cursor_a;
 
-	target = -1;
-	init_a = stack_a;
 	while (stack_b)
 	{
-		diff = INT_MAX;
-		idx_b = stack_b->index;
-		while (stack_a)
+		target_index = INT_MAX;
+		target_p = -1;
+		cursor_a = stack_a;
+		while (cursor_a)
 		{
-			if (idx_b < stack_a->index && (stack_a->index - idx_b) < diff)
+			if (cursor_a->index > stack_b->index
+				&& cursor_a->index < target_index)
 			{
-				diff = stack_a->index - idx_b;
-				target = stack_a->curr_pos;
+				target_index = cursor_a->index;
+				target_p = cursor_a->curr_pos;
 			}
-			stack_a = stack_a->next;
+			cursor_a = cursor_a->next;
 		}
-		stack_a = init_a;
-		if (target == -1)
-		{
-			while (stack_a)
-			{
-				if (stack_a->index < diff)
-				{
-					diff = stack_a->index;
-					target = stack_a->curr_pos;
-				}
-				stack_a = stack_a->next;
-			}
-		}
-		stack_b->target_pos = target;
+		if (target_p == -1)
+			set_target_p(stack_a, stack_b, cursor_a, target_p);
+		stack_b->target_pos = target_p;
 		stack_b = stack_b->next;
 	}
 }

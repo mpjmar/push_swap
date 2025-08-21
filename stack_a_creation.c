@@ -6,7 +6,7 @@
 /*   By: maria-j2 <maria-j2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 18:43:10 by mpazjimenez       #+#    #+#             */
-/*   Updated: 2025/08/17 13:58:55 by maria-j2         ###   ########.fr       */
+/*   Updated: 2025/08/21 17:23:38 by maria-j2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ t_node	*create_new_node(void)
 	new_node->target_pos = 0;
 	new_node->cost_a = 0;
 	new_node->cost_b = 0;
-	new_node->cheapest_node = 0;
 	new_node->next = NULL;
 	return (new_node);
 }
