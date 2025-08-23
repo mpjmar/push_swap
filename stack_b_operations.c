@@ -6,7 +6,7 @@
 /*   By: maria-j2 <maria-j2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 19:41:27 by maria-j2          #+#    #+#             */
-/*   Updated: 2025/08/21 18:13:24 by maria-j2         ###   ########.fr       */
+/*   Updated: 2025/08/23 19:35:32 by maria-j2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	count_nodes(t_node *stack)
 	return (size);
 }
 
-static void	move_nodes(t_node **stack_a, t_node **stack_b)
+/* static void	move_nodes(t_node **stack_a, t_node **stack_b)
 {
 	int	max;
 	int	size;
@@ -36,10 +36,10 @@ static void	move_nodes(t_node **stack_a, t_node **stack_b)
 	while (size > 0)
 	{
 		nodes = count_nodes(*stack_a);
-		if ((max % 2 == 0) && (*stack_a)->index <= max / 2 && nodes > 3)
+		if ((max % 2 == 0) && ((*stack_a)->index <= (max / 2)) && nodes > 3)
 			push_b(stack_a, stack_b);
 		else if ((max % 2 != 0)
-			&& (*stack_a)->index <= (max / 2) + 1 && nodes > 3)
+			&& ((*stack_a)->index <= (max / 2) + 1) && nodes > 3)
 			push_b(stack_a, stack_b);
 		else
 			rotate_a(stack_a);
@@ -58,6 +58,26 @@ void	create_stack_b(t_node **stack_a, t_node **stack_b)
 	while (size > 3)
 	{
 		if ((*stack_a)->index != max)
+		{
+			push_b(stack_a, stack_b);
+			size--;
+		}
+		else
+			rotate_a(stack_a);
+	}
+} */
+
+void	create_stack_b(t_node **stack_a, t_node **stack_b)
+{
+	int	max;
+	int	size;
+
+	max = count_nodes(*stack_a);
+	
+	size = count_nodes(*stack_a);
+	while (size > 3)
+	{
+		if ((*stack_a)->index != max || (*stack_a)->index <= (max / 2))
 		{
 			push_b(stack_a, stack_b);
 			size--;

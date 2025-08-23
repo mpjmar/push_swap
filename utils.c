@@ -6,7 +6,7 @@
 /*   By: maria-j2 <maria-j2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 16:29:22 by mpazjimenez       #+#    #+#             */
-/*   Updated: 2025/08/21 17:24:05 by maria-j2         ###   ########.fr       */
+/*   Updated: 2025/08/23 16:42:16 by maria-j2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,17 @@ int	neg_to_abs(int a)
 	if (a < 0)
 		a *= -1;
 	return (a);
+}
+// BORRAR!! 
+
+void	print_stack_state(const char *name, t_node *stack)
+{
+    printf("Estado de %s:\n", name);
+    while (stack)
+    {
+        printf("value: %d | index: %d | curr_pos: %d | target_pos: %d | cost_a: %d | cost_b: %d\n",
+            stack->value, stack->index, stack->curr_pos, stack->target_pos, stack->cost_a, stack->cost_b);
+        stack = stack->next;
+    }
+    printf("----\n");
 }

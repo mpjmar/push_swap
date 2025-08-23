@@ -6,7 +6,7 @@
 /*   By: maria-j2 <maria-j2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 14:56:36 by maria-j2          #+#    #+#             */
-/*   Updated: 2025/08/21 19:00:04 by maria-j2         ###   ########.fr       */
+/*   Updated: 2025/08/23 18:18:19 by maria-j2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <limits.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdio.h> // BORRAR
 
 typedef struct s_node
 {
@@ -51,8 +52,8 @@ void	update_curr_pos(t_node *stack);
 // main
 int		main(int argc, char **argv);
 void	push_swap(t_node **stack_a, t_node **stack_b);
-int		manage_two_args(char **argv, t_node *stack_a);
-int		take_actions(t_node *stack_a, t_node *stack_b);
+// int		manage_two_args(char **argv, t_node **stack_a);
+int		take_actions(t_node **stack_a, t_node **stack_b);
 
 // movements
 void	rotate_pos(t_node **stack_a, t_node **stack_b, int cost_a, int cost_b);
@@ -102,10 +103,13 @@ long	ft_atol(const char *str);
 void	free_stack(t_node **stack);
 void	free_split(char **arr);
 int		neg_to_abs(int a);
+void	print_stack_state(const char *name, t_node *stack); // BORRAR
 
 // verification checks
 int		not_duplicated(t_node *stack, int number);
+int		is_numeric(char *str);
 int		is_int(long number);
 int		is_sorted(t_node *stack);
+void	free_and_write(t_node **stack);
 
 #endif
